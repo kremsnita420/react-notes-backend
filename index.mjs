@@ -12,10 +12,6 @@ app.use(json())
 app.use(urlencoded({ extended: true }))
 connectDB()
 
-app.get("/", (req, res) => {
-    res.json("Hello from server!");
-});
-
 // GET all notes
 app.get("/api/notes", async (req, res) => {
     try {
@@ -50,8 +46,8 @@ app.get("/api/notes/:id", async (req, res) => {
 // POST a note
 app.post("/api/notes", async (req, res) => {
     try {
-        const { title, description } = req.body
-        const data = await Note.create({ title, description });
+        const { title, description, userId } = req.body
+        const data = await Note.create({ title, description, userId });
         if (!data) {
             throw new Error("An error occurred while creating a note.");
         }
@@ -66,8 +62,8 @@ app.post("/api/notes", async (req, res) => {
 app.put("/api/notes/:id", async (req, res) => {
     const noteId = req.params.id
     try {
-        const { title, description } = req.body
-        const data = await Note.findByIdAndUpdate(noteId, { title, description });
+        const { title, description, userId } = req.body
+        const data = await Note.findByIdAndUpdate(noteId, { title, description, userId });
         if (!data) {
             throw new Error("An error occurred while updating a note.");
         }
@@ -82,7 +78,7 @@ app.put("/api/notes/:id", async (req, res) => {
 app.delete("/api/notes/:id", async (req, res) => {
     const noteId = req.params.id
     try {
-        const { title, description } = req.body
+
         const data = await Note.findByIdAndDelete(noteId);
         if (!data) {
             throw new Error("An error occurred while deleting a note.");

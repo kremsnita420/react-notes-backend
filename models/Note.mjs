@@ -8,6 +8,9 @@ const NoteSchema = new Schema({
     },
     description: {
         type: String
+    },
+    userId: {
+        type: String
     }
 });
 
